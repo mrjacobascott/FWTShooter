@@ -52,6 +52,7 @@ namespace FWTShooter {
             tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
             tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            tbl.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
 
             //add headings
             tbl.Controls.Add(new Label() { Text = "Setting", Anchor = AnchorStyles.Top, TextAlign = ContentAlignment.MiddleCenter }, 0, 0);
@@ -114,13 +115,12 @@ namespace FWTShooter {
             tbl.Controls.Add(new Label() { Text = "", }, 3, tbl.RowCount - 1);
 
             //Remote port range
-            //TODO: make button functional
             tbl.RowCount++;
             tbl.Controls.Add(new Label() {
                 Text = "Remote Port Range", Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleLeft
             }, 0, tbl.RowCount - 1);
-            tbl.Controls.Add(new TextBox() { Text = "", Dock = DockStyle.Fill, Name = "rport1" }, 1, tbl.RowCount - 1);
+            tbl.Controls.Add(new TextBox() { Text = "", Dock = DockStyle.Fill, Name = "rport0" }, 1, tbl.RowCount - 1);
             tbl.Controls.Add(new Label() {
                 Text = "", TextAlign = ContentAlignment.MiddleCenter, ForeColor = Color.Red
             }, 2, tbl.RowCount - 1);
@@ -150,7 +150,7 @@ namespace FWTShooter {
                 Text = "Local User Authorized List", Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleLeft
             }, 0, tbl.RowCount - 1);
-            tbl.Controls.Add(new TextBox() { Text = "", Dock = DockStyle.Fill, Name = "rport1" }, 1, tbl.RowCount - 1);
+            tbl.Controls.Add(new TextBox() { Text = "", Dock = DockStyle.Fill, Name = "rport0" }, 1, tbl.RowCount - 1);
             tbl.Controls.Add(new Label() {
                 Text = "", TextAlign = ContentAlignment.MiddleCenter, ForeColor = Color.Red
             }, 2, tbl.RowCount - 1);
@@ -193,13 +193,12 @@ namespace FWTShooter {
             tbl.Controls.Add(new Label() { Text = "", Anchor = AnchorStyles.Top }, 3, tbl.RowCount - 1);
 
             //Local port range
-            //TODO: make button functional
             tbl.RowCount++;
             tbl.Controls.Add(new Label() {
                 Text = "Local Port Range", Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleLeft
             }, 0, tbl.RowCount - 1);
-            tbl.Controls.Add(new TextBox() { Text = "", Dock = DockStyle.Fill, Name = "lport1" }, 1, tbl.RowCount - 1);
+            tbl.Controls.Add(new TextBox() { Text = "", Dock = DockStyle.Fill, Name = "lport0" }, 1, tbl.RowCount - 1);
             tbl.Controls.Add(new Label() {
                 Text = "", TextAlign = ContentAlignment.MiddleCenter, ForeColor = Color.Red
             }, 2, tbl.RowCount - 1);
@@ -207,13 +206,12 @@ namespace FWTShooter {
             tbl.Controls.Add(new Button() { Text = "Add", Anchor = AnchorStyles.None }, 4, tbl.RowCount - 1);
 
             //Remote Address range
-            //TODO: make button functional
             tbl.RowCount++;
             tbl.Controls.Add(new Label() {
                 Text = "Remote Address Range", Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleLeft
             }, 0, tbl.RowCount - 1);
-            tbl.Controls.Add(new TextBox() { Text = "", Dock = DockStyle.Fill, Name = "rrange1" }, 1, tbl.RowCount - 1);
+            tbl.Controls.Add(new TextBox() { Text = "", Dock = DockStyle.Fill, Name = "rrange0" }, 1, tbl.RowCount - 1);
             tbl.Controls.Add(new Label() {
                 Text = "", TextAlign = ContentAlignment.MiddleCenter, ForeColor = Color.Red
             }, 2, tbl.RowCount - 1);
@@ -250,7 +248,6 @@ namespace FWTShooter {
             tbl.Controls.Add(new Label() { Text = "", }, 3, tbl.RowCount - 1);
 
             //Policy App ID
-            //todo check name
             tbl.RowCount++;
             tbl.Controls.Add(new Label() { Text = "Policy App ID", Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft },
                 0, tbl.RowCount - 1);
@@ -262,7 +259,6 @@ namespace FWTShooter {
             tbl.Controls.Add(new Label() { Text = "", }, 3, tbl.RowCount - 1);
 
             //Package Family Name
-            //todo check name
             tbl.RowCount++;
             tbl.Controls.Add(new Label() {
                 Text = "Package Family Name", Dock = DockStyle.Fill,
@@ -287,7 +283,6 @@ namespace FWTShooter {
             tbl.Controls.Add(new Label() { Text = "", }, 3, tbl.RowCount - 1);
 
             //ICMP Types and Codes
-            //TODO: make button functional
             tbl.RowCount++;
             tbl.Controls.Add(new Label() {
                 Text = "ICMP Types and Codes", Dock = DockStyle.Fill,
@@ -301,22 +296,19 @@ namespace FWTShooter {
             tbl.Controls.Add(new Button() { Text = "Add", Anchor = AnchorStyles.None }, 4, tbl.RowCount - 1);
 
             //Local Address range
-            //TODO: make button functional
             tbl.RowCount++;
             tbl.Controls.Add(new Label() {
                 Text = "Local Address Range", Dock = DockStyle.Fill,
                 TextAlign = ContentAlignment.MiddleLeft
             }, 0, tbl.RowCount - 1);
-            tbl.Controls.Add(new TextBox() { Text = "", Dock = DockStyle.Fill, Name = "lrange1" }, 1, tbl.RowCount - 1);
+            tbl.Controls.Add(new TextBox() { Text = "", Dock = DockStyle.Fill, Name = "lrange0" }, 1, tbl.RowCount - 1);
             tbl.Controls.Add(new Label() {
                 Text = "", TextAlign = ContentAlignment.MiddleCenter, ForeColor = Color.Red
             }, 2, tbl.RowCount - 1);
             tbl.Controls.Add(new Label() { Text = "", }, 3, tbl.RowCount - 1);
 
             var lrangeadd = new Button() { Text = "Add", Anchor = AnchorStyles.None };
-            lrangeadd.Click += new EventHandler(lrangadd_click);
             tbl.Controls.Add(lrangeadd, 4, tbl.RowCount - 1);
-
 
             // adding handler for when any control is pressed (including labels)
             foreach (Control c in this.tbl.Controls) {
@@ -337,87 +329,128 @@ namespace FWTShooter {
 
         }
 
-        private void lrangadd_click(object sender, EventArgs e) {
-            //Local Address range
-            // TODO update reference label? 
-            tbl.RowCount++;
-            tbl.Controls.Add(new Label() {
-                Text = "Local Address Range", Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleLeft
-            }, 0, tbl.RowCount - 1);
-            
-            // counter for how many times the name appears in the list
-            // so that we can increment the number reference for the button
-            var lrangecount = new int();
-            for(int i = 0; i<tbl.RowCount; i++) {
-                if (tbl.GetControlFromPosition(0, i).Text == "Local Address Range") {
-                    lrangecount++;
-                }
-            }
-            // add textbox, dynamically generate the name
-            var lrange = new TextBox() { Text = "", Dock = DockStyle.Fill, Name = string.Format("lrange{0}", lrangecount) };
-            tbl.Controls.Add(lrange, 1, tbl.RowCount - 1);
-            tbl.Controls.Add(new Label() {Text = "", TextAlign = ContentAlignment.MiddleCenter, ForeColor = Color.Red
-                }, 2, tbl.RowCount - 1);
-            tbl.Controls.Add(new Label() { Text = "", }, 3, tbl.RowCount - 1);
-
-            // add add button, dynamically generate the name
-            var lrangeadd = new Button() { Text = "Add", Anchor = AnchorStyles.None, 
-                Name= string.Format("lrangeadd{0}", lrangecount)};
-            lrangeadd.Click += new EventHandler(lrangadd_click);
-            tbl.Controls.Add(lrangeadd, 4, tbl.RowCount - 1);
-
-            // add delete button, dynamically generate the name
-            var lrangeremove = new Button() { Text = "Delete", Anchor = AnchorStyles.None, 
-                Name = string.Format("lrangedelete{0}", lrangecount) };
-            tbl.Controls.Add(lrangeremove, 5, tbl.RowCount - 1);
-
-            // adding handler for when any control is pressed (including labels)
-            foreach (Control c in this.tbl.Controls) {
-                c.MouseClick -= new MouseEventHandler(ClickOnTableLayoutPanel);
-                c.MouseClick += new MouseEventHandler(ClickOnTableLayoutPanel);
-            }
-        }
-
         // this is where to do something based on a table control being clicked
         public void ClickOnTableLayoutPanel(object sender, MouseEventArgs e) {
-
+            ///////////////////////////////////////////////////////////
+            ///DELETE row
             // column 5 is the delete column. Get the row and purge it
             if (tbl.GetColumn((Control)sender) > 0 && tbl.GetColumn((Control)sender) == 5) {
                 //MessageBox.Show("delete clicked: " + tbl.GetRow((Control)sender) + ", " + tbl.GetColumn((Control)sender));
-                //tbl.Controls.RemoveAt(tbl.GetRow((Control)sender));
                 var currentRow = tbl.GetRow((Control)sender);
                 if (currentRow >= tbl.RowCount) {
                     return;
                 }
-
                 // delete all controls of row that we want to delete
                 for (int i = 0; i < tbl.ColumnCount; i++) {
                     var control = tbl.GetControlFromPosition(i, currentRow);
                     tbl.Controls.Remove(control);
                 }
-
                 // move up row controls that comes after row we want to remove
                 for (int i = currentRow + 1; i < tbl.RowCount; i++) {
                     for (int j = 0; j < tbl.ColumnCount; j++) {
                         var control = tbl.GetControlFromPosition(j, i);
                         if (control != null) {
-                            //tbl.Controls.Add(control, j, i - 1);
                             tbl.SetRow(control, i - 1);
                         }
                     }
                 }
+                // remove the style from the last row, possibly not needed
                 var removeStyle = tbl.RowCount - 1;
                 if (tbl.RowStyles.Count > removeStyle)
                     tbl.RowStyles.RemoveAt(removeStyle);
                 tbl.RowCount--;
+                //this.Refresh();
             }
-            
 
-            // todo once figured out how to mitigate the delete issue
-            // migrate add button to here. Check the row that it came from
-            // insert new row below using the name of the setting
+            ////////////////////////////////////////////////////////////
+            /// DUPLICATE row
+            // goal is to copy the current row to the row below it
+            // will have to do it by copying all data and moving down
+            if (tbl.GetColumn((Control)sender) > 0 && tbl.GetColumn((Control)sender) == 4) {
+                // get the row that sent the request
+                var currentRow = tbl.GetRow((Control)sender);
+                tbl.RowCount++;
+                // move down row controls that comes after row we want to add
+                // start at the bottom and shuffle moving up the page because this 
+                // moves the control, it doesn't copy it
+                for (int i = tbl.RowCount - 1; i > currentRow; i--) {
+                    for (int j = 0; j < tbl.ColumnCount; j++) {
+                        var controlToRemove = tbl.GetControlFromPosition(j, i + 1);
+                        if (controlToRemove != null) {
+                            tbl.Controls.Remove(controlToRemove);
+                        }
 
+                        var ctl = tbl.GetControlFromPosition(j, i);
+                        if (ctl != null) {
+                            tbl.Controls.Add(ctl, j, i + 1);
+                            //this.Refresh();
+                            //tbl.SetRow(control, i + 1);
+                        }
+                    }
+                }
+
+                //copy current row to below row
+                for (int j = 0; j < 2; j++) {
+                    var controlToRemove = tbl.GetControlFromPosition(j, currentRow + 1);
+                    if (controlToRemove != null) {
+                        tbl.Controls.Remove(controlToRemove);
+                    }
+                    this.Refresh();
+
+                }
+                var controlName = tbl.GetControlFromPosition(0, currentRow);
+                // copy label of button clicked and add to new row
+                tbl.Controls.Add(new Label() {
+                    Text = controlName.Text, Dock = DockStyle.Fill,
+                    TextAlign = ContentAlignment.MiddleLeft
+                }, 0, currentRow + 1);
+                // counter for how many times the name appears in the list
+                // so that we can increment the number reference for the control/button
+                var settingCount = new int();
+                for (int i = 0; i < tbl.RowCount; i++) {
+                    if (tbl.GetControlFromPosition(0, i).Text == controlName.Text) {
+                        settingCount++;
+                    }
+                }
+
+                // add data entry control, dynamically generate the name
+                var control = tbl.GetControlFromPosition(1, currentRow);
+                var id = control.Name;
+                // only text box style setting can have some added, so that's all that is logic'd here
+                var newControl = new TextBox() {Text = "", Dock = DockStyle.Fill,
+                    Name = string.Format(id + "{0}", settingCount)};
+                tbl.Controls.Add(newControl, 1, currentRow + 1);
+
+                tbl.Controls.Add(new Label() {
+                    Text = "", TextAlign = ContentAlignment.MiddleCenter, ForeColor = Color.Red
+                }, 2, currentRow + 1);
+                tbl.Controls.Add(new Label() { Text = "", }, 3, currentRow + 1);
+                var lrangeadd = new Button() {
+                    Text = "Add", Anchor = AnchorStyles.None,
+                    Name = string.Format(id + "{0}", settingCount)
+                };
+                tbl.Controls.Add(lrangeadd, 4, currentRow + 1);
+                var lrangeremove = new Button() {
+                    Text = "Delete", Anchor = AnchorStyles.None,
+                    Name = string.Format(id + "{0}", settingCount)
+                };
+                tbl.Controls.Add(lrangeremove, 5, currentRow + 1);
+
+                //make sure the new button has an event handler
+                foreach (Control c in this.tbl.Controls) {
+                    c.MouseClick -= new MouseEventHandler(ClickOnTableLayoutPanel);
+                    c.MouseClick += new MouseEventHandler(ClickOnTableLayoutPanel);
+                }
+            }
+
+            //blank rows appear for unknown reasons, trying to clean them up
+            for (int i = 0; i < tbl.RowCount; i++) {
+                var blankrows = tbl.GetControlFromPosition(0, i);
+                if (blankrows == null) {
+                    tbl.RowCount--;
+                }
+                //this.Refresh();
+            }
 
         }
 

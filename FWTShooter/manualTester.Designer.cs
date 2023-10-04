@@ -75,6 +75,7 @@
             // 
             tbl.AutoScroll = true;
             tbl.AutoSize = true;
+            tbl.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tbl.CellBorderStyle = TableLayoutPanelCellBorderStyle.Outset;
             tbl.ColumnCount = 6;
             tbl.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
@@ -91,7 +92,6 @@
             tbl.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             tbl.Size = new Size(770, 34);
             tbl.TabIndex = 0;
-            tbl.Paint += tbl_Paint;
             // 
             // imageList1
             // 
