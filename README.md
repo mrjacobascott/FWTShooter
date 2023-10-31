@@ -2,10 +2,13 @@
 
 The goal of this project is to help troubleshoot issues related to firewall rules deployed from Microsoft Intune. 
 
+![menu](/images/menu1.png)
 
 Currently the app has 2 features:
 - A) View successfully deployed firewall rules from Intune
+![local](/images/local1.png)
 - B) Manually build out rules to determine if they would be successfully applied
+![manual](/images/builder1.png)
 
 
 Part A design is complete and fully implemented
