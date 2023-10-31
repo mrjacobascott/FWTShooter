@@ -153,7 +153,7 @@ namespace FWTShooter {
                 Name = "networkTypes", Items = { "FW_PROFILE_TYPE_DOMAIN", "FW_PROFILE_TYPE_PRIVATE", "FWPROFILETYPEPUBLIC",
                     "FW_PROFILE_TYPE_ALL", "FW_PROFILE_TYPE_CURRENT"}, Width = 250, CheckOnClick = true,
             };
-            nt.Click += new System.EventHandler(evaluateRules);
+            nt.SelectedIndexChanged += new System.EventHandler(evaluateRules);
             tbl.Controls.Add(nt, 1, tbl.RowCount - 1);
 
             //Direction
@@ -171,6 +171,14 @@ namespace FWTShooter {
             direc.SelectedIndexChanged += new System.EventHandler(evaluateRules);
             tbl.Controls.Add(direc, 1, tbl.RowCount - 1);
 
+            //Service Name
+            tbl.RowCount++;
+            tbl.Controls.Add(new Label() {
+                Text = "Service Name", Dock = DockStyle.Fill,
+                TextAlign = ContentAlignment.MiddleLeft
+            }, 0, tbl.RowCount - 1);
+            tbl.Controls.Add(new TextBox() { Text = "", Dock = DockStyle.Fill, Name = "svc" }, 1, tbl.RowCount - 1);
+            
             //Local port range
             tbl.RowCount++;
             tbl.Controls.Add(new Label() {
@@ -257,7 +265,7 @@ namespace FWTShooter {
             for (int i = 1; i < tbl.RowCount; i++) {
                 //add status text placeholder to each row
                 tbl.Controls.Add(new Label() {
-                    Text = "", TextAlign = ContentAlignment.MiddleLeft, ForeColor = Color.Red, Anchor = AnchorStyles.Left
+                    Text = "", TextAlign = ContentAlignment.MiddleLeft, ForeColor = Color.Red, Anchor = AnchorStyles.Left, AutoSize = true
                 }, 2, i);
 
                 //add tooltip placeholder to each row
@@ -356,7 +364,6 @@ namespace FWTShooter {
             for (int i = 0; i < tbl.RowCount; i++) {
                 var control = tbl.GetControlFromPosition(1, i);
                 if (control.Name == "interfaceTypes") {
-                    // todo found the control for this, now need to get the values for it
                     var ctl = (CheckedListBox) tbl.GetControlFromPosition(1, i);
                     var warning = tbl.GetControlFromPosition(2, i);
                     var checkedItems = ctl.CheckedItems;
@@ -379,15 +386,55 @@ namespace FWTShooter {
             // Name = "filePath" 
             //The file path of an app is simply its location on the client device.
             //For example, C:\Windows\System\Notepad.exe or % WINDIR %\Notepad.exe.
-            //You can define one application to be used in each Firewall rule.If you
-            //specify multiple conditions in a single rule, these will be treated as an
-            //AND operation. i.e program = svchost.exe AND service = mpssvc, etc. All of
-            //the app related conditions in a single rule work to scope the traffic even
-            //further, so they must all correspond to the specific app/ service.
+            //You can define one application to be used in each Firewall rule.
 
-            // todo fpath1: verify length of filepath < 261 chars
+            //populate tooltips
+            for (int i = 0; i < tbl.RowCount; i++) {
+                var setting = tbl.GetControlFromPosition(1, i);
+                if (setting.Name == "filePath") {
+                    tt.SetToolTip(tbl.GetControlFromPosition(3, i),
+                        "fpath1: verify length of filepath < 261 chars" +
+                        "\nfpath2: cannot contain spaces or path invalid characters");
 
-            // todo fpath2: cannot contain spaces or path invalid characters <>:"/|?* 
+
+                }
+            }
+
+            // fpath1: verify length of filepath < 261 chars
+            // fpath2: cannot contain spaces or path invalid characters <>"/|?*
+            for (int i = 0; i < tbl.RowCount; i++) {
+                var control = tbl.GetControlFromPosition(1, i);
+                if (control.Name == "filePath") {
+                    if (control.Text.ToString().Length > 0) {
+                        if (control.Text.ToString().Length > 260) { 
+                            if (tbl.GetControlFromPosition(2, i).Text.Contains("fpath1")) {
+
+                            }else {
+                                tbl.GetControlFromPosition(2, i).Text = tbl.GetControlFromPosition(2, i).Text + "Error: fpath1\n";
+                            }
+                        } else {
+                            tbl.GetControlFromPosition(2, i).Text = tbl.GetControlFromPosition(2, i).Text.Replace("Error: fpath1\n", "");
+                        }
+
+                        var invalidChars = new List<string> { "<", ">", "\"", "/", "|", "?", "*" };
+                        if (invalidChars.Any(s=>control.Text.ToString().Contains(s))) {
+                            if (tbl.GetControlFromPosition(2, i).Text.Contains("fpath2")) {
+
+                            } else {
+                                tbl.GetControlFromPosition(2, i).Text = tbl.GetControlFromPosition(2, i).Text + "Error: fpath2\n";
+                            }
+                            
+                        } else {
+                            tbl.GetControlFromPosition(2, i).Text = tbl.GetControlFromPosition(2, i).Text.Replace("Error: fpath2\n", "");
+                        }
+
+                    } else {
+                        tbl.GetControlFromPosition(2, i).Text = "";
+                    }
+                } 
+            }
+ 
+             
 
 
 
@@ -428,6 +475,8 @@ namespace FWTShooter {
             // edge traversal
             // combobox name: edgeTraversal
             // possibly requires IPV6 if specified, need to see if it gets created locally
+
+            // populate tool tips
             for (int i = 0; i < tbl.RowCount; i++) {
                 var setting = tbl.GetControlFromPosition(1, i);
                 if (setting.Name == "edgeTraversal") {
@@ -439,7 +488,6 @@ namespace FWTShooter {
             }
 
             // rule edge1: if edge traversal is enabled, rule direction must be inbound
-            // todo change to direction, not protocol. 
             for (int i = 0; i < tbl.RowCount; i++) {
                 var control = tbl.GetControlFromPosition(1, i);
                 if (control.Name == "edgeTraversal") {
@@ -465,16 +513,87 @@ namespace FWTShooter {
             ///////////////////////////////////////////////////////////////////////////
             // local users
             // Name = "lusers"
-            // todo lusers1: cannot be used if targeting a service
+            // lusers1: cannot be used if targeting a service
             // todo lusers2: verify This is a string in Security Descriptor Definition Language (SDDL) format.
 
+            // populate tool tips
+            for (int i = 0; i < tbl.RowCount; i++) {
+                var setting = tbl.GetControlFromPosition(1, i);
+                if (setting.Name == "lusers") {
+                    tt.SetToolTip(tbl.GetControlFromPosition(3, i),
+                        "lusers1: Local User Authorized List cannot be used if a service is targeted.");
+
+
+                }
+            }
+
+            // rules
+            // lusers1: cannot be used if targeting a service
+            for (int i = 0; i < tbl.RowCount; i++) {
+                var control = tbl.GetControlFromPosition(1, i);
+                if (control.Name == "lusers") {
+                    if (control.Text.Length > 0) {
+                        for (int j = 0; j < tbl.RowCount; j++) {
+                            var svc = tbl.GetControlFromPosition(1, j);
+                            if (svc.Name == "svc") {
+                                if (svc.Text.Length > 0) {
+                                    tbl.GetControlFromPosition(2, i).Text = "Error: lusers1";
+                                } else {
+                                    tbl.GetControlFromPosition(2, i).Text = "";
+                                }
+                            }
+                        }
+                    } else {
+                        tbl.GetControlFromPosition(2, i).Text = "";
+                    }
+                }
+            }
+
+
+
             ///////////////////////////////////////////////////////////////////////////
-            // network types
+            // network types (aka profiles)
             // Name = "networkTypes"
+
+            // populate tool tips
+            for (int i = 0; i < tbl.RowCount; i++) {
+                var setting = tbl.GetControlFromPosition(1, i);
+                if (setting.Name == "networkTypes") {
+                    tt.SetToolTip(tbl.GetControlFromPosition(3, i),
+                        "netType1: If network type FW_PROFILE_TYPE_CURRENT is selected, no other network type can be selected.");
+
+
+                }
+            }
+
+            // netType1: Cannot use FW_PROFILE_TYPE_CURRENT with any other type
+            for (int i = 0; i < tbl.RowCount; i++) {
+                var control = tbl.GetControlFromPosition(1, i);
+                if (control.Name == "networkTypes") {
+                    var ctl = (CheckedListBox)tbl.GetControlFromPosition(1, i);
+                    var warning = tbl.GetControlFromPosition(2, i);
+                    var checkedItems = ctl.CheckedItems;
+                    if (checkedItems.Contains("FW_PROFILE_TYPE_CURRENT")) {
+                        if (checkedItems.Contains("FW_PROFILE_TYPE_DOMAIN") | checkedItems.Contains("FW_PROFILE_TYPE_PRIVATE") |
+                            checkedItems.Contains("FWPROFILETYPEPUBLIC") | checkedItems.Contains("FW_PROFILE_TYPE_ALL")) {
+                            warning.Text = "Error: netType1";
+                        } else {
+                            warning.Text = "";
+                        }
+                    } else {
+                        warning.Text = "";
+                    }
+                }
+            }
 
             ///////////////////////////////////////////////////////////////////////////
             // direction
             // Name = "direction"
+
+            ///////////////////////////////////////////////////////////////////////////
+            // Service name
+            // Name = "svc"
+            
 
             ///////////////////////////////////////////////////////////////////////////
             // local port range
@@ -526,7 +645,7 @@ namespace FWTShooter {
             ///////////////////////////////////////////////////////////////////////////
             // protocol
             // Name = "protocol"
-            // todo: protocol1: verify single number and 0-255
+            // todo: protocol1: verify single number and 0-255 inclusive
 
             ///////////////////////////////////////////////////////////////////////////
             // icmp types and codes
